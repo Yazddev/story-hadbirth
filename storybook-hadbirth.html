@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ارسلان و جشن تولد مامان</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .book-container {
+            width: 900px;
+            height: 600px;
+            max-width: 90vw;
+            max-height: 80vh;
+            position: relative;
+            perspective: 1500px;
+        }
+        
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .page {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            backface-visibility: hidden;
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .page-left {
+            left: 0;
+            border-radius: 10px 0 0 10px;
+        }
+        
+        .page-right {
+            right: 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+        
+        .page-content {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cover-page {
+            background: linear-gradient(45deg, #FF69B4, #FFD700, #FF69B4);
+            color: white;
+            position: relative;
+        }
+        
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.3"/><circle cx="80" cy="40" r="1.5" fill="white" opacity="0.4"/><circle cx="40" cy="70" r="1" fill="white" opacity="0.5"/></svg>') repeat;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .cover-title {
+            font-size: 2.5rem;
+            margin: 20px 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            z-index: 2;
+            position: relative;
+        }
+        
+        .cover-illustration {
+            width: 180px;
+            height: 180px;
+            margin: 20px auto;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            border: 4px solid white;
+            z-index: 2;
+            position: relative;
+            animation: gentle-bounce 3s ease-in-out infinite;
+        }
+        
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .story-illustration {
+            width: 280px;
+            height: 200px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            border: 3px solid #FF69B4;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .story-illustration:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(255,105,180,0.3);
+        }
+        
+        .story-text {
+            font-size: 1.2rem;
+            color: #2C3E50;
+            line-height: 1.7;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .story-text h3 {
+            color: #E91E63;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .floating-element {
+            position: absolute;
+            animation: float 4s ease-in-out infinite;
+            font-size: 25px;
+        }
+        
+        .floating-element:nth-child(1) { animation-delay: 0s; }
+        .floating-element:nth-child(2) { animation-delay: 1.3s; }
+        .floating-element:nth-child(3) { animation-delay: 2.6s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            75% { transform: translateY(-5px) rotate(-3deg); }
+        }
+        
+        .morning-scene { background: linear-gradient(135deg, #FFE135, #FFA726); }
+        .planning-scene { background: linear-gradient(135deg, #81C784, #AED581); }
+        .shopping-scene { background: linear-gradient(135deg, #64B5F6, #90CAF9); }
+        .baking-scene { background: linear-gradient(135deg, #FFB74D, #FFCC02); }
+        .decorating-scene { background: linear-gradient(135deg, #F48FB1, #F8BBD9); }
+        .surprise-scene { background: linear-gradient(135deg, #CE93D8, #E1BEE7); }
+        .celebration-scene { background: linear-gradient(135deg, #FF8A65, #FFAB91); }
+        
+        .final-celebration {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #FFA07A);
+            background-size: 400% 400%;
+            animation: gradient-shift 6s ease infinite;
+            color: white;
+            position: relative;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-button {
+            background: linear-gradient(45deg, #FF69B4, #4ECDC4);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            font-size: 1.1rem;
+            font-family: 'Vazirmatn', Arial, sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .page-indicator {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(255,255,255,0.9);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #333;
+            z-index: 100;
+        }
+        
+        .sparkle {
+            color: #FFD700;
+            animation: sparkle 2s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.7; transform: scale(1.3) rotate(180deg); }
+        }
+        
+        .heart-beat {
+            animation: heart-beat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes heart-beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .book-container {
+                width: 100%;
+                height: 500px;
+            }
+            
+            .page-content {
+                padding: 20px 15px;
+            }
+            
+            .story-illustration {
+                width: 200px;
+                height: 150px;
+                font-size: 50px;
+            }
+            
+            .cover-illustration {
+                width: 120px;
+                height: 120px;
+                font-size: 60px;
+            }
+            
+            .cover-title {
+                font-size: 1.8rem;
+            }
+            
+            .story-text {
+                font-size: 1rem;
+            }
+            
+            .story-text h3 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-button {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+        
+        .page-turn-effect {
+            animation: pageTurn 0.8s ease-in-out;
+        }
+        
+        @keyframes pageTurn {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(-90deg); }
+            100% { transform: rotateY(-180deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book" id="book">
+            
+            <!-- Cover Page (Page 1) -->
+            <div class="page page-right" id="page-1" data-page="1">
+                <div class="page-content cover-page">
+                    <div class="cover-illustration">🎂👦🏻💝</div>
+                    <h1 class="cover-title">ارسلان و جشن تولد مامان</h1>
+                    <h2 style="font-size: 1.2rem; z-index: 2; position: relative;">The Great Birthday Adventure</h2>
+                    <p style="font-size: 1rem; margin-top: 20px; z-index: 2; position: relative;">
+                        داستان کامل یک روز خاص با قهرمان کوچک ما
+                    </p>
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page page-right" id="page-2" data-page="2" style="display: none;">
+                <div class="page-content" style="background: linear-gradient(135deg, #FFF8F0, #FFE4E1);">
+                    <div class="page-indicator">صفحه ۱</div>
+                    <div class="story-illustration morning-scene">
+                        <div class="floating-elements">
+                            <div class="floating-element" style="top: 20%; right: 15%;">☀️</div>
+                            <div class="floating-element" style="top: 60%; left: 20%;">💡</div>
+                            <div class="floating-element" style="bottom: 25%; right: 25%;">❗</div>
+                        </div>
+                        😮👦🏻📅
+                    </div>
+                    <div class="story-text">
+                        <h3>کشف بزرگ صبحگاهی</h3>
+                        <p>صبح زود که ارسلان بیدار شد، متوجه شد امروز تولد مامان هدیه است! او فراموش کرده بود.</p>
+                        <p>«اوه نه! باید کاری بکنم!»</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page page-right" id="page-3" data-page="3" style="display: none;">
+                <div class="page-content" style="background: linear-gradient(135deg, #E8F5E8, #F0FFF0);">
+                    <div class="page-indicator">صفحه ۲</div>
+                    <div class="story-illustration planning-scene">
+                        <div class="floating-elements">
+                            <div class="floating-element" style="top: 15%; right: 25%;">🤫</div>
+                            <div class="floating-element" style="bottom: 20%; left: 15%;">📋</div>
+                            <div class="floating-element" style="top: 50%; left: 30%;">✨</div>
+                        </div>
+                        🤔👦🏻📝
+                    </div>
+                    <div class="story-text">
+                        <h3>نقشه مخفی</h3>
+                        <p>ارسلان پاورچین رفت پیش بابا یزدان: «بابا! امروز تولد مامانه!»</p>
+                        <p>بابا لبخند زد: «بیا یه مهمونی مخفی براش بگیریم!»</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page page-right" id="page-4" data-page="4" style="display: none;">
+                <div class="page-content" style="background: linear-gradient(135deg, #E3F2FD, #F0F8FF);">
+                    <div class="page-indicator">صفحه ۳</div>
+                    <div class="story-illustration shopping-scene">
+                        <div class="floating-elements">
+                            <div class="floating-element" style="top: 25%; right: 20%;">🛒</div>
+                            <div class="floating-element" style="bottom: 30%; left: 25%;">🌈</div>
+                            <div class="floating-element" style="top: 45%; left: 15%;">🎈</div>
+                        </div>
+                        🏪👦🏻👨
+                    </div>
+                    <div class="story-text">
+                        <h3>ماجرای خرید</h3>
+                        <p>بابا و ارسلان مخفیانه به مغازه رفتند. ارسلان بادکنک‌های رنگارنگ انتخاب کرد.</p>
+                        <p>«همه‌شون رو می‌خوام!» ارسلان فریاد زد!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 5 -->
+            <div class="page page-right" id="page-5" data-page="5" style="display: none;">
+                <div class="page-content" style="background: linear-gradient(135deg, #FFF8E1, #FFFDE7);">
+                    <div class="page-indicator">صفحه ۴</div>
+                    <div class="story-illustration baking-scene">
+                        <div class="floating-elements">
+                            <div class="floating-element" style="top: 20%; right: 30%;">🥚</div>
+                            <div class="floating-element" style="bottom: 25%; left: 20%;">🍰</div>
+                            <div class="floating-element" style="top: 50%; right: 10%;">💨</div>
+                        </div>
+                        👦🏻🍰💥
+                    </div>
+                    <div class="story-text">
+                        <h3>آشپزی پرماجرا</h3>
+                        <p>ارسلان سعی کرد کیک درست کند. آرد را روی خودش ریخت!</p>
+                        <p>«بابا! من گند زدم!» بابا او را بغل کرد: «نه عزیزم، بیا با هم ادامه بدیم.»</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 6 -->
+            <div class="page page-right" id="page-6" data-page="6" style="display: none;">
+                <div class="page-content" style="background: linear-gradient(135deg, #FCE4EC, #F8BBD9);">
+                    <div class="page-indicator">صفحه ۵</div>
+                    <div class="story-illustration decorating-scene">
+                        <div class="floating-elements">
+                            <div class="floating-element" style="top: 15%; right: 20%;">🎀</div>
+                            <div class="floating-element" style="bottom: 20%; left: 30%;">⭐</div>
+                            <div class="floating-element" style="top: 60%; right: 15%;">🎨</div>
+                        </div>
+                        🎈👦🏻🏠
+                    </div>
+                    <div class="story-text">
+                        <h3>ماموریت تزیین</h3>
+                        <p>ارسلان بادکنک‌ها را آویزان کرد و خانه را تزیین کرد.</p>
+                        <p>خانه مثل قصر پری‌ها شده بود!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 7 -->
+            <div class="page page-right" id="page-7" data-page="7" style="display: none;">
+                <div class="page-content" style="background: linear-gradient(135deg, #F3E5F5, #E1BEE7);">
+                    <div class="page-indicator">صفحه ۶</div>
+                    <div class="story-illustration surprise-scene">
+                        <div class="floating-elements">
+                            <div class="floating-element" style="top: 25%; right: 25%;">😲</div>
+                            <div class="floating-element" style="bottom: 15%; left: 20%;">💕</div>
+                            <div class="floating-element" style="top: 45%; left: 10%;">🎉</div>
+                        </div>
+                        👩😍🏠
+                    </div>
+                    <div class="story-text">
+                        <h3>سورپرایز بزرگ</h3>
+                        <p>وقتی مامان هدیه برگشت، ارسلان گفت: «چشماتو ببند!»</p>
+                        <p>مامان چشمانش را باز کرد: «وای! این چیه؟!»</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 8 -->
+            <div class="page page-right" id="page-8" data-page="8" style="display: none;">
+                <div class="page-content" style="background: linear-gradient(135deg, #FFEBEE, #FFAB91);">
+                    <div class="page-indicator">صفحه ۷</div>
+                    <div class="story-illustration celebration-scene">
+                        <div class="floating-elements">
+                            <div class="floating-element" style="top: 20%; right: 20%;">🕯️</div>
+                            <div class="floating-element" style="bottom: 25%; left: 25%;">🎶</div>
+                            <div class="floating-element" style="top: 50%; right: 10%;">🥳</div>
+                        </div>
+                        👨‍👩‍👦🎂🕯️
+                    </div>
+                    <div class="story-text">
+                        <h3>جشن کامل</h3>
+                        <p>آن‌ها شمع‌ها را روشن کردند و آهنگ تولد خواندند.</p>
+                        <p>«این بهترین تولد زندگیمه!» مامان گفت.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Page -->
+            <div class="page page-right" id="page-9" data-page="9" style="display: none;">
+                <div class="page-content final-celebration">
+                    <div class="page-indicator" style="background: rgba(255,255,255,0.3);">پایان</div>
+                    <h2 style="font-size: 1.8rem; margin-bottom: 20px;">🎊 پایان ماجرای شگفت‌انگیز 🎊</h2>
+                    
+                    <div class="story-illustration" style="background: rgba(255,255,255,0.2); border-color: white;">
+                        <span class="heart-beat">💕</span>👨‍👩‍👦<span class="heart-beat">💕</span>
+                    </div>
+                    
+                    <div class="story-text" style="color: white;">
+                        <p>ارسلان فهمیده بود که بهترین هدیه‌ها از قلب می‌آیند.</p>
+                        <p style="margin-top: 15px;">
+                            <span class="sparkle">✨</span> <span class="sparkle">⭐</span> <span class="sparkle">🌟</span>
+                            <br>پایان داستان<br>
+                            <span class="sparkle">✨</span> <span class="sparkle">⭐</span> <span class="sparkle">🌟</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn" onclick="previousPage()">
+                ← قبلی
+            </button>
+            <button class="nav-button" id="nextBtn" onclick="nextPage()">
+                بعدی →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPageNum = 1;
+        const totalPages = 9;
+
+        function showPage(pageNum) {
+            // Hide all pages
+            for(let i = 1; i <= totalPages; i++) {
+                const page = document.getElementById(`page-${i}`);
+                if(page) {
+                    page.style.display = 'none';
+                    page.classList.remove('page-turn-effect');
+                }
+            }
+            
+            // Show current page with animation
+            const currentPage = document.getElementById(`page-${pageNum}`);
+            if(currentPage) {
+                currentPage.style.display = 'block';
+                setTimeout(() => {
+                    currentPage.classList.add('page-turn-effect');
+                }, 50);
+            }
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = (pageNum === 1);
+            document.getElementById('nextBtn').disabled = (pageNum === totalPages);
+            
+            // Update button text for last page
+            if(pageNum === totalPages) {
+                document.getElementById('nextBtn').innerHTML = '🔄 از اول';
+                document.getElementById('nextBtn').disabled = false;
+            } else {
+                document.getElementById('nextBtn').innerHTML = 'بعدی →';
+            }
+        }
+
+        function nextPage() {
+            if(currentPageNum === totalPages) {
+                // Restart from beginning
+                currentPageNum = 1;
+            } else {
+                currentPageNum++;
+            }
+            showPage(currentPageNum);
+        }
+
+        function previousPage() {
+            if(currentPageNum > 1) {
+                currentPageNum--;
+                showPage(currentPageNum);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'ArrowRight' || e.key === ' ') {
+                nextPage();
+            } else if(e.key === 'ArrowLeft') {
+                previousPage();
+            }
+        });
+
+        // Touch/swipe navigation for mobile
+        let startX = 0;
+        let endX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            endX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = startX - endX;
+            
+            if(Math.abs(diff) > swipeThreshold) {
+                if(diff > 0) {
+                    // Swipe left - next page
+                    nextPage();
+                } else {
+                    // Swipe right - previous page
+                    previousPage();
+                }
+            }
+        }
+
+        // Add click interactions to illustrations
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.story-illustration, .cover-illustration').forEach(illustration => {
+                illustration.addEventListener('click', function() {
+                    // Add celebration effect
+                    this.style.transform = 'scale(1.1) rotate(2deg)';
+                    
+                    // Create temporary sparkles
+                    for(let i = 0; i < 3; i++) {
+                        const sparkle = document.createElement('div');
+                        sparkle.innerHTML = ['✨', '⭐', '🌟'][Math.floor(Math.random() * 3)];
+                        sparkle.style.position = 'absolute';
+                        sparkle.style.fontSize = '20px';
+                        sparkle.style.pointerEvents = 'none';
+                        sparkle.style.left = Math.random() * 80 + 10 + '%';
+                        sparkle.style.top = Math.random() * 80 + 10 + '%';
+                        sparkle.style.zIndex = '1000';
+                        sparkle.style.animation = 'sparkle 1s ease-out forwards';
+                        
+                        this.appendChild(sparkle);
+                        
+                        setTimeout(() => sparkle.remove(), 1000);
+                    }
+                    
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1) rotate(0deg)';
+                    }, 300);
+                });
+            });
+            
+            // Initialize first page
+            showPage(1);
+            
+            // Randomize floating elements timing
+            document.querySelectorAll('.floating-element').forEach(element => {
+                element.style.animationDelay = Math.random() * 4 + 's';
+            });
+        });
+    </script>
+</body>
+</html>
